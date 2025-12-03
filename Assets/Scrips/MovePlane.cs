@@ -46,22 +46,19 @@ public class MovePlane : MonoBehaviour
 
         }
     }
-
-    private void changeDir()
-    {
-        dir *= -1;
-    }
-//<<<<<<< HEAD
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        collision.transform.parent=transform;
+        collision.transform.parent = transform;
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
         collision.transform.parent = null;
     }
-    //=======
 
+    private void changeDir()
+    {
+        dir *= -1;
+    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         Debug.Log(deltaPos);
