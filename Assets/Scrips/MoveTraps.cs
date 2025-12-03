@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class MovePlane : MonoBehaviour
+public class MoveTraps : MonoBehaviour
 {
     [Tooltip("移动轴 0为x 1为y 2为斜上 3为斜下")]
     public int MoveAxis = 0;
@@ -59,21 +58,4 @@ public class MovePlane : MonoBehaviour
     {
         dir *= -1;
     }
-    //private void OnTriggerStay2D(Collider2D collision)
-    //{
-    //    Debug.Log(deltaPos);
-    //    if (collision.CompareTag("Player"))
-    //    {
-    //        Rigidbody2D PlayerRb = collision.gameObject.transform.parent.gameObject.GetComponent<Rigidbody2D>();
-    //        if (PlayerRb != null)
-    //        {
-    //            Vector3 TargetPos = new Vector3(PlayerRb.position.x - deltaPos.x, PlayerRb.position.y + deltaPos.y, 0);
-    //            PlayerRb.MovePosition(TargetPos);
-
-    //        }
-    //    }
-
-    //}
 }
-
-
