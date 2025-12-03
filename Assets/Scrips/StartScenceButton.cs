@@ -1,21 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StartScenceButton : MonoBehaviour
 {
+
+    private void Start()
+    {
+        
+    }
     public void StartGame()
     {
         SceneManager.LoadScene("GamingScene");
     }
-
-    public void Setting()
-    {
-
-    }
+    
     public void Quit()
     {
         UnityEditor.EditorApplication.isPlaying = false;
