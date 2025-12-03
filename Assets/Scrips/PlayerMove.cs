@@ -14,27 +14,25 @@ public class PlayerMove : MonoBehaviour
         Application.targetFrameRate = 60;
         rb=GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
     void Update()
     {
-        MoveContorl();
-    }
-
-    private void MoveContorl()
-    {
-        if (IsGround.isGround || isMovePlane.isPlane)
+        if (IsGround.isGround)
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            if (IsGround.isGround || isMovePlane.isPlane)
             {
-                rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
+                if (Input.GetKeyDown(KeyCode.W))
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
+                }
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
+                }
             }
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
-            }
+            
         }
         MoveController = Input.GetAxisRaw("Horizontal");
+        rb.velocity = new Vector2(MoveSpeed * MoveController, rb.velocity.y);
         rb.velocity = new Vector2(MoveSpeed * MoveController, rb.velocity.y);
     }
 

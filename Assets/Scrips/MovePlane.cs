@@ -51,6 +51,16 @@ public class MovePlane : MonoBehaviour
     {
         dir *= -1;
     }
+//<<<<<<< HEAD
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        collision.transform.parent=transform;
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        collision.transform.parent = null;
+    }
+//=======
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -65,6 +75,7 @@ public class MovePlane : MonoBehaviour
 
             }
         }
+
     }
 }
 

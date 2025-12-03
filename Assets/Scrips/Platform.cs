@@ -28,7 +28,11 @@ public class Platform : MonoBehaviour
     }
     //private void OnCollisionExit2D(Collision collision)
     //{
+//<<<<<<< HEAD
+    //    if(collision.gameObject.CompareTag("Platform"))
+//=======
     //    if (collision.gameObject.CompareTag("Platform"))
+//>>>>>>> 479c402fc3d81b63412c5063c861d6ef14c4253c
     //    {
     //        currentPlatformCollider = null;
     //    }
