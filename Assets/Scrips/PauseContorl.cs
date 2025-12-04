@@ -1,54 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PauseContorl : MonoBehaviour
 {
-    bool isPause = false;
-    Vector2 offScreenPos;
-    Vector2 Pos;
-    Vector2 CameraPos;
-    float Speed = 500;
-    Rigidbody2D rb;
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        offScreenPos = new Vector3(0, 20.5f);
-        CameraPos = this.transform.parent.gameObject.GetComponent<Rigidbody2D>().position;
-        Pos = CameraPos + offScreenPos;
-    }
-
-    // Update is called once per frame
+    public bool isOn =false;
     void Update()
     {
-        if (SceneManager.GetActiveScene().name != "StartScene")
+        if (isOn && SceneManager.GetActiveScene().name != "StartScene" && Input.GetKeyDown(KeyCode.Escape))
         {
             InputPause();
         }
     }
-    private void FixedUpdate()
+
+    public void InputPause()
     {
-        if (SceneManager.GetActiveScene().name != "StartScene")
-        {
-            MoveMenu();
-            if (Vector2.Distance(rb.position, CameraPos) <0.1f && isPause) { PasueAll(); }
-        }
+        StartCoroutine(Pause());
     }
-
-    private void InputPause()
+    IEnumerator Pause()
     {
+        var scr = GetComponent<changeMenu>();
+        BaseSetting.isPause = !BaseSetting.isPause;
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            isPause = !isPause;
-            if (!isPause) { ResumeAll(); }
-            
-        }
-
-
+        if (!BaseSetting.isPause) { ResumeAll(); }
+        scr.Change();
+        if (BaseSetting.isPause) { yield return new WaitForSeconds(0.2f); PasueAll(); }
     }
     private void PasueAll()
     {
@@ -57,16 +37,9 @@ public class PauseContorl : MonoBehaviour
     }
     private void ResumeAll()
     {
+        if (EventSystem.current != null) { EventSystem.current.SetSelectedGameObject(null); }
         Time.timeScale = 1f;
         Debug.Log("”Œœ∑ª÷∏¥");
-    }
-    private void MoveMenu()
-    {
-        CameraPos = this.transform.parent.gameObject.GetComponent<Rigidbody2D>().position;
-        Pos = CameraPos + ((!isPause)?offScreenPos:Vector2.zero);
-        float t = Time.deltaTime;
-        Vector3 newPosition = Vector3.MoveTowards(rb.position, Pos, Speed * t);
-        rb.MovePosition(newPosition);
     }
 
 
