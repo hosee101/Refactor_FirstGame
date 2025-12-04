@@ -41,4 +41,12 @@ public class VoiceFunc : MonoBehaviour
         BaseSetting.Sound = SoundToggle.isOn;
     }
 
+    private void Update()
+    {
+        if(bar != null) { bar.value = BaseSetting.VoiceVolume; }
+        if(InputText != null) { InputText.text = (Mathf.RoundToInt(BaseSetting.VoiceVolume*100)).ToString(); }
+        if(BGMtoggle != null) { BGMtoggle.isOn = BaseSetting.BackGroundMusic; }
+        if (SoundToggle != null) {  SoundToggle.isOn = BaseSetting.Sound;}
+    }
+
 }

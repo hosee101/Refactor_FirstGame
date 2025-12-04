@@ -16,13 +16,7 @@ public class VoiceChange : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (BaseSetting.BackGroundMusic)
-        {
-            audioSource.volume = BaseSetting.VoiceVolume;
-        }
-        else
-        {
-            audioSource.volume = 0;
-        }
+        audioSource.volume = BaseSetting.VoiceVolume;
+        audioSource.mute = !BaseSetting.BackGroundMusic;
     }
 }

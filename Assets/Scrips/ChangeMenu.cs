@@ -1,43 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class changeMenu : MonoBehaviour
 {
-    public Rigidbody2D CurrentMenu;
-    public Rigidbody2D TargetMenu;
+    public RectTransform CurrentMenu;
+    public RectTransform TargetMenu;
     public RectTransform canvas;
     public bool isInit = false;
+    public float DurationAnimation = 0.1f;
     Vector2 CurrentPos;
     Vector2 TargetPos;
     Vector2 deltaPos;
-
-    bool isMove = false;
+    bool isAnimation = false;
+    public float t;
 
     void Start()
     {
-        deltaPos = new Vector2(0, canvas.rect.height * 1.5f);
-        if(isInit) { TargetMenu.position = CurrentMenu.position + deltaPos; }
-
-    }
-
-    private void FixedUpdate()
-    {
-        if (isMove)
+        if(isInit)
         {
-            CurrentMenu.MovePosition(TargetPos);
-            TargetMenu.MovePosition(CurrentPos);
-            if (Vector2.Distance(CurrentMenu.position, TargetPos) < 0.1f && Vector2.Distance(TargetMenu.position, CurrentPos) < 0.1f)
-            {
-                isMove = false;
-            }
+            deltaPos = new Vector2(0, canvas.rect.height);
+            //CurrentMenu.anchoredPosition = canvas.anchoredPosition;
+            TargetMenu.anchoredPosition = CurrentMenu.anchoredPosition + deltaPos;
         }
     }
-    public void ChangeMenu()
-    {
 
-        CurrentPos = CurrentMenu.position;
-        TargetPos = TargetMenu.position;
-        isMove = true;
+    public void Change()
+    {
+        if (!isAnimation) { StartCoroutine(ChangeMenu()); }
+    }
+
+    IEnumerator ChangeMenu()
+    {
+        isAnimation = true;
+        CurrentPos = CurrentMenu.anchoredPosition;
+        TargetPos = TargetMenu.anchoredPosition;
+        float PassTime = 0f;
+        while (PassTime < DurationAnimation)
+        {
+            PassTime += Time.unscaledDeltaTime;
+            t = Mathf.Clamp01(PassTime/DurationAnimation);
+            CurrentMenu.anchoredPosition = Vector2.Lerp(CurrentPos, TargetPos, t);
+            TargetMenu.anchoredPosition = Vector2.Lerp(TargetPos, CurrentPos, t);
+            yield return null;
+        }
+
+        CurrentMenu.anchoredPosition = TargetPos;
+        TargetMenu.anchoredPosition = CurrentPos;
+        isAnimation = false;
+        
     }
 }

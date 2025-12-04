@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class PauseContorl : MonoBehaviour
@@ -26,7 +27,7 @@ public class PauseContorl : MonoBehaviour
         BaseSetting.isPause = !BaseSetting.isPause;
 
         if (!BaseSetting.isPause) { ResumeAll(); }
-        scr.ChangeMenu();
+        scr.Change();
         if (BaseSetting.isPause) { yield return new WaitForSeconds(0.2f); PasueAll(); }
     }
     private void PasueAll()
@@ -36,6 +37,7 @@ public class PauseContorl : MonoBehaviour
     }
     private void ResumeAll()
     {
+        if (EventSystem.current != null) { EventSystem.current.SetSelectedGameObject(null); }
         Time.timeScale = 1f;
         Debug.Log("”Œœ∑ª÷∏¥");
     }
