@@ -52,3 +52,5 @@ public class changeMenu : MonoBehaviour
         
     }
 }
+
+// ±êÊ¶·û
