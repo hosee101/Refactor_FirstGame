@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Windows;
 
+
 public class PlayerMove : MonoBehaviour
 {
+    public string nowKeys;
     // Start is called before the first frame update
     public Rigidbody2D rb;
-    public int MoveSpeed=10;
+    public int MoveSpeed = 10;
     public int JumpAbility = 5;
     private float MoveController;
+    private bool W, A, S, D, I, J, K, L;
 
     [Header("dash info")]
     [SerializeField] private float dashSpeed;
@@ -18,11 +21,61 @@ public class PlayerMove : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-        rb=GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
     void Update()
     {
-        MoveController = UnityEngine.Input.GetAxisRaw("Horizontal");
+        //MoveController = UnityEngine.Input.GetAxisRaw("Horizontal");
+        switch (nowKeys)
+        {
+            case "wdjk":
+                A = false;
+                S = false;
+                W = true;
+                D = true;
+                J = true;
+                K = true;
+                I = false;
+                L = false;
+                break;
+        }
+
+        if (UnityEngine.Input.GetKey(KeyCode.A) && A)
+        {
+            MoveController = -1;
+        }
+        if (UnityEngine.Input.GetKey(KeyCode.D) && D)
+        {
+            MoveController = 1;
+        }
+        if (UnityEngine.Input.GetKey(KeyCode.J) && J)
+        {
+            MoveController = -1;
+        }
+        if (UnityEngine.Input.GetKey(KeyCode.L) && L)
+        {
+            MoveController = 1;
+        }
+
+        if (UnityEngine.Input.GetKeyUp(KeyCode.A) && A)
+        {
+            MoveController = 0;
+        }
+        if (UnityEngine.Input.GetKeyUp(KeyCode.D) && D)
+        {
+            MoveController = 0;
+        }
+        if (UnityEngine.Input.GetKeyUp(KeyCode.J) && J)
+        {
+            MoveController = 0;
+        }
+        if (UnityEngine.Input.GetKeyUp(KeyCode.L) && L)
+        {
+            MoveController = 0;
+        }
+
+
+
         if (UnityEngine.Input.GetKey(KeyCode.LeftShift))
         {
             dashTime = dashDuration;
@@ -31,27 +84,31 @@ public class PlayerMove : MonoBehaviour
 
         rb.velocity = new Vector2(MoveSpeed * MoveController, rb.velocity.y);
         if (IsGround.isGround || isMovePlane.isPlane)
+        {
+            if (dashTime > 0)
             {
-                if (dashTime > 0)
-                {
-                    rb.velocity = new Vector2(MoveController * dashSpeed, rb.velocity.y);
-                }
-                if (UnityEngine.Input.GetKeyDown(KeyCode.W))
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
-                }
-                if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
-                {
-                    rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
-                }
-            
-            
+                rb.velocity = new Vector2(MoveController * dashSpeed, rb.velocity.y);
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.W)&&W)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Space))
+            {
+                rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
+            }
+            if (UnityEngine.Input.GetKeyDown(KeyCode.I)&&I)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
+            }
+
+
 
         }
     }
 
-
-
-
-
 }
+
+
+
+
