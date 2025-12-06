@@ -13,7 +13,6 @@ public class changeMenu : MonoBehaviour
     Vector2 CurrentPos;
     Vector2 TargetPos;
     Vector2 deltaPos;
-    bool isAnimation = false;
     float t = 0;
 
     void Start()
@@ -28,12 +27,13 @@ public class changeMenu : MonoBehaviour
 
     public void Change()
     {
-        if (!isAnimation) { StartCoroutine(ChangeMenu()); }
+        if (!BaseSetting.isMenuAnimation) { BaseSetting.isMenuAnimation = true; ; StartCoroutine(ChangeMenu()); }
+
     }
 
     IEnumerator ChangeMenu()
     {
-        isAnimation = true;
+
         CurrentPos = CurrentMenu.anchoredPosition;
         TargetPos = TargetMenu.anchoredPosition;
         float PassTime = 0f;
@@ -48,9 +48,7 @@ public class changeMenu : MonoBehaviour
 
         CurrentMenu.anchoredPosition = TargetPos;
         TargetMenu.anchoredPosition = CurrentPos;
-        isAnimation = false;
+        BaseSetting.isMenuAnimation = false;
         
     }
 }
-
-// ±êÊ¶·û

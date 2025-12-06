@@ -7,4 +7,6 @@ public static class BaseSetting
     public static bool BackGroundMusic = true;
     public static bool Sound = true;
     public static bool isPause = false;
+
+    public static bool isMenuAnimation = false;
 }
