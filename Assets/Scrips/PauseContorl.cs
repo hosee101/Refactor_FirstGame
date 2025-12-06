@@ -10,6 +10,8 @@ public class PauseContorl : MonoBehaviour
     public bool isOn =false;
     void Update()
     {
+        Debug.Log(BaseSetting.isPause);
+        if (!BaseSetting.isPause) { ResumeAll(); }
         if (isOn && SceneManager.GetActiveScene().name != "StartScene" && Input.GetKeyDown(KeyCode.Escape))
         {
             InputPause();
@@ -18,26 +20,25 @@ public class PauseContorl : MonoBehaviour
 
     public void InputPause()
     {
-        StartCoroutine(Pause());
+        if (!BaseSetting.isMenuAnimation)
+        {
+            GetComponent<changeMenu>().Change();
+            StartCoroutine(Pause());
+        }
     }
     IEnumerator Pause()
     {
-        var scr = GetComponent<changeMenu>();
         BaseSetting.isPause = !BaseSetting.isPause;
-
-        if (!BaseSetting.isPause) { ResumeAll(); }
-        scr.Change();
         if (BaseSetting.isPause) { yield return new WaitForSeconds(0.2f); PasueAll(); }
+        UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(null);
     }
     private void PasueAll()
     {
         Time.timeScale = 0f;
-        Debug.Log("”Œœ∑‘›Õ£");
     }
     private void ResumeAll()
     {
         Time.timeScale = 1f;
-        Debug.Log("”Œœ∑ª÷∏¥");
     }
 
 
