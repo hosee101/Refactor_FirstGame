@@ -12,7 +12,7 @@ public class KeyUI : MonoBehaviour
     }
     private void ShowKey(List<KeyCode> key)
     {
-        for(int i = 0; i < 4; i++)
+        for(int i = 0; i < keyui.Count; i++)
         {
             keyui[i].text = key[i].ToString();
         }
