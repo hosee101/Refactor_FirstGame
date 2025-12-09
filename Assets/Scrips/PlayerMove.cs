@@ -11,6 +11,10 @@ public class PlayerMove : MonoBehaviour
     public int MoveSpeed = 10;
     public int JumpAbility = 5;
     public static float MoveController;
+    //
+    private bool isWalk;
+    private Animator anim;
+    //
 
     [Header("dash info")]
     [SerializeField] private float dashSpeed;
@@ -24,7 +28,9 @@ public class PlayerMove : MonoBehaviour
     {
         Application.targetFrameRate = 60;
         rb = GetComponent<Rigidbody2D>();
-
+        //
+        anim = GetComponent<Animator>();
+        //
         currentKey = new List<KeyCode>();
         key = new Dictionary<int, List<KeyCode>>()
         {
@@ -74,6 +80,10 @@ public class PlayerMove : MonoBehaviour
         dashTime -= Time.deltaTime;
 
         rb.velocity = new Vector2(MoveSpeed * MoveController, rb.velocity.y);
+        //以下用于动画
+        isWalk = rb.velocity.x != 0;
+        anim.SetBool("iswalk", isWalk);
+        //
         //MoveController = UnityEngine.Input.GetAxisRaw("Horizontal");
         //switch (nowKeys)
         //{
