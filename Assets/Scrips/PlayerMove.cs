@@ -15,6 +15,9 @@ public class PlayerMove : MonoBehaviour
     private bool isWalk;
     private Animator anim;
     //
+    private int facingdirection = 1;
+    private bool faceRight = true;
+
 
     [Header("dash info")]
     [SerializeField] private float dashSpeed;
@@ -22,7 +25,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float dashTime;
 
     static public List<KeyCode> currentKey;
-    static int currentKeyIndex=0;
+    static int currentKeyIndex = 0;
     static public Dictionary<int, List<KeyCode>> key;
     void Start()
     {
@@ -39,10 +42,11 @@ public class PlayerMove : MonoBehaviour
             [2] = new List<KeyCode>() { KeyCode.I, KeyCode.J, KeyCode.S, KeyCode.D, },
             [3] = new List<KeyCode>() { KeyCode.A, KeyCode.D, KeyCode.O, KeyCode.K, },
         };
-        
+
     }
     void Update()
     {
+        flipcontroller();
         currentKey = key[currentKeyIndex];
         if (Input.GetKey(currentKey[0]))
         {
@@ -53,7 +57,7 @@ public class PlayerMove : MonoBehaviour
                     rb.velocity = new Vector2(MoveController * dashSpeed, rb.velocity.y);
                 }
                 rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
-                
+
             }
         }
         if (Input.GetKey(currentKey[1]))
@@ -200,6 +204,25 @@ public class PlayerMove : MonoBehaviour
     // ijsd
     // adok
 
+
+
+    private void flip()
+    {
+        facingdirection = facingdirection * -1;
+        faceRight = !faceRight;
+        transform.Rotate(0, 180, 0);
+    }
+    private void flipcontroller()
+    {
+        if (rb.velocity.x > 0 && !faceRight)
+        {
+            flip();
+        }
+        else if (rb.velocity.x < 0 && faceRight)
+        {
+            flip();
+        }
+    }
 }
 
 
