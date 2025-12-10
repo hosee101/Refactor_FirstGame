@@ -46,6 +46,20 @@ public class PlayerMove : MonoBehaviour
     }
     void Update()
     {
+        currentKey = key[currentKeyIndex];
+        flipcontroller();
+        if (Input.GetKey(currentKey[0]))
+        { 
+            if (IsGround.isGround || isMovePlane.isPlane)
+            {
+                if (dashTime > 0)
+                {
+                    rb.velocity = new Vector2(MoveController * dashSpeed, rb.velocity.y);
+                }
+                rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
+
+            }
+        }
         if (Input.GetKey(currentKey[1]))
         {
             MoveController = -1;
@@ -63,21 +77,6 @@ public class PlayerMove : MonoBehaviour
             MoveController = 0;
         }
 
-        flipcontroller();
-        currentKey = key[currentKeyIndex];
-        if (Input.GetKey(currentKey[0]))
-        {
-            Debug.Log(isMovePlane.isPlane);
-            if (IsGround.isGround || isMovePlane.isPlane)
-            {
-                if (dashTime > 0)
-                {
-                    rb.velocity = new Vector2(MoveController * dashSpeed, rb.velocity.y);
-                }
-                rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
-
-            }
-        }
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
@@ -85,7 +84,10 @@ public class PlayerMove : MonoBehaviour
         }
         dashTime -= Time.deltaTime;
 
+        Debug.Log(new Vector2(MoveSpeed * MoveController, rb.velocity.y));
         rb.velocity = new Vector2(MoveSpeed * MoveController, rb.velocity.y);
+
+
         //以下用于动画
         isWalk = rb.velocity.x != 0;
         anim.SetBool("iswalk", isWalk);
