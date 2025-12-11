@@ -48,17 +48,13 @@ public class PlayerMove : MonoBehaviour
     {
         currentKey = key[currentKeyIndex];
         flipcontroller();
-        if (Input.GetKey(currentKey[0]))
-        { 
-            if (IsGround.isGround || isMovePlane.isPlane)
+        if (Input.GetKey(currentKey[0]) && isJump.Jump)
+        {
+            if (dashTime > 0)
             {
-                if (dashTime > 0)
-                {
-                    rb.velocity = new Vector2(MoveController * dashSpeed, rb.velocity.y);
-                }
-                rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
-
+                rb.velocity = new Vector2(MoveController * dashSpeed, rb.velocity.y);
             }
+            rb.velocity = new Vector2(rb.velocity.x, JumpAbility);
         }
         if (Input.GetKey(currentKey[1]))
         {
@@ -84,7 +80,6 @@ public class PlayerMove : MonoBehaviour
         }
         dashTime -= Time.deltaTime;
 
-        Debug.Log(new Vector2(MoveSpeed * MoveController, rb.velocity.y));
         rb.velocity = new Vector2(MoveSpeed * MoveController, rb.velocity.y);
 
 
