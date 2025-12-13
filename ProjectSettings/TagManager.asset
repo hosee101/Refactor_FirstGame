@@ -61,6 +61,9 @@ TagManager:
   - name: Player
     uniqueID: 385898277
     locked: 0
+  - name: trap
+    uniqueID: 1893003181
+    locked: 0
   - name: gameScene_BeforePlayer
     uniqueID: 569555741
     locked: 0
