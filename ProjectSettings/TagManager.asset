@@ -16,6 +16,7 @@ TagManager:
   - decorate
   - savePoint
   - KeyChange
+  - Win
   layers:
   - Default
   - TransparentFX
