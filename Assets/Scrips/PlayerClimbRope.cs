@@ -14,13 +14,14 @@ public class PlayerClimbRope : MonoBehaviour
     private void OnTriggerStay2D(Collider2D collision)
     {
         
-        ClimbController = Input.GetAxisRaw("Vertical");
         if (collision.transform.CompareTag("Rope"))
         {
 
-            if((Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S)))
+            if ((Input.GetKey(PlayerMove.currentKey[0]) || Input.GetKey(PlayerMove.currentKey[2])))
             {
-                rb.velocity = new Vector2(0, ClimbSpeed * ClimbController);
+                if(Input.GetKey(PlayerMove.currentKey[0])){ ClimbController = 1; }
+                else if (Input.GetKey(PlayerMove.currentKey[2])) { ClimbController = -1; }
+                    rb.velocity = new Vector2(0, ClimbSpeed * ClimbController);
             }
         }
     }
